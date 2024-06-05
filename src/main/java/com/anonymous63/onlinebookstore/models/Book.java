@@ -33,4 +33,10 @@ public class Book {
     private int quantity;
     @Column(nullable = false)
     private boolean active;
+
+    @ManyToOne
+    private Category category;
+    @ManyToOne
+    private User user;
+
 }

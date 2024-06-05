@@ -3,6 +3,9 @@ package com.anonymous63.onlinebookstore.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "users")
@@ -23,5 +26,8 @@ public class User {
 
     @Column(nullable = false)
     private boolean enabled;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Book> books = new ArrayList<>();
 
 }

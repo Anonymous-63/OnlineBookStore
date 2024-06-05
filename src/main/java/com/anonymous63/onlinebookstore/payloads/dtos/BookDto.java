@@ -35,4 +35,7 @@ public class BookDto {
     @NotEmpty(message = "Active is required")
     private boolean active;
 
+    private CategoryDto category;
+    private UserDto user;
+
 }
