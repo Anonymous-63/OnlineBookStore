@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class AuditServiceImpl implements AuditLogService {
+public class AuditLogServiceImpl implements AuditLogService {
 
     @Autowired
     private AuditLogRepo auditRepo;

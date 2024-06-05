@@ -23,7 +23,7 @@ public class CrudServiceImpl<Entity, DTO, ID> implements CrudService<DTO, ID> {
     protected ModelMapper modelMapper;
 
     @Autowired
-    protected AuditServiceImpl auditService;
+    protected AuditLogServiceImpl auditLogService;
 
     private Class<Entity> entityClass;
     private Class<DTO> dtoClass;
@@ -36,14 +36,14 @@ public class CrudServiceImpl<Entity, DTO, ID> implements CrudService<DTO, ID> {
     @Override
     public DTO findById(ID id) {
         Entity entity = this.repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Entity", "id", id));
-        return modelMapper.map(entity, dtoClass);
+        return this.modelMapper.map(entity, dtoClass);
     }
 
     @Override
     public CrudResponse findAll(Integer page, Integer size, String sortBy, String sortDir) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
         Page<Entity> entityPage = this.repository.findAll(pageable);
-        List<DTO> dtos = entityPage.getContent().stream().map(entity -> modelMapper.map(entity, dtoClass))
+        List<DTO> dtos = entityPage.getContent().stream().map(entity -> this.modelMapper.map(entity, dtoClass))
                 .collect(Collectors.toList());
         CrudResponse response = CrudResponseConverter.convertToResponse(dtos, entityPage);
         return response;
@@ -51,26 +51,26 @@ public class CrudServiceImpl<Entity, DTO, ID> implements CrudService<DTO, ID> {
 
     @Override
     public DTO create(DTO dto) {
-        Entity entity = modelMapper.map(dto, entityClass);
+        Entity entity = this.modelMapper.map(dto, entityClass);
         Entity createEntity = repository.save(entity);
-        auditService.log("CREATE", entityClass.getSimpleName(), null, "Anonymous63", 63L, entity.toString());
-        return modelMapper.map(createEntity, dtoClass);
+        this.auditLogService.log("CREATE", entityClass.getSimpleName(), null, "Anonymous63", 63L, entity.toString());
+        return this.modelMapper.map(createEntity, dtoClass);
     }
 
     @Override
     public DTO update(DTO dto, ID id) {
         Entity entity = this.repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Entity", "id", id));
-        modelMapper.map(dto, entity);
+        this.modelMapper.map(dto, entity);
         Entity savedEntity = repository.save(entity);
-        auditService.log("UPDATE", entityClass.getSimpleName(), (Long) id, "Anonymous63", 63L, entity.toString());
-        return modelMapper.map(savedEntity, dtoClass);
+        this.auditLogService.log("UPDATE", entityClass.getSimpleName(), (Long) id, "Anonymous63", 63L, entity.toString());
+        return this.modelMapper.map(savedEntity, dtoClass);
     }
 
     @Override
     public void delete(ID id) {
         Entity entity = this.repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Entity", "id", id));
         repository.deleteById(id);
-        auditService.log("DELETE", entityClass.getSimpleName(), (Long) id, "Anonymous63", 63L, entity.toString());
+        this.auditLogService.log("DELETE", entityClass.getSimpleName(), (Long) id, "Anonymous63", 63L, entity.toString());
     }
 
 }

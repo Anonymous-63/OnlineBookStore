@@ -22,7 +22,7 @@ public class UserController {
 
     // GET /api/users/
     @GetMapping("/")
-    public CrudResponse getAllUsers(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+    public CrudResponse findAllUsers(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                     @RequestParam(value = "size", defaultValue = "100", required = false) int size,
                                     @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
                                     @RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir) {
@@ -31,7 +31,7 @@ public class UserController {
 
     // GET /api/users/{id}
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable Long id) {
+    public UserDto findUserById(@PathVariable Long id) {
         return this.userService.findById(id);
     }
 

@@ -20,7 +20,7 @@ public class CategoryController {
 
     // GET /api/users/
     @GetMapping("/")
-    public CrudResponse getAllCategory(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+    public CrudResponse findAllCategory(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                        @RequestParam(value = "size", defaultValue = "100", required = false) int size,
                                        @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
                                        @RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir) {
@@ -29,7 +29,7 @@ public class CategoryController {
 
     // GET /api/users/{id}
     @GetMapping("/{id}")
-    public CategoryDto getCategoryById(@PathVariable Long id) {
+    public CategoryDto findCategoryById(@PathVariable Long id) {
         return this.categoryService.findById(id);
     }
 
