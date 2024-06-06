@@ -6,5 +6,9 @@ import com.anonymous63.onlinebookstore.payloads.response.CrudResponse;
 public interface BookService extends CrudService<BookDto, Long> {
 
     CrudResponse findBookByCategoryId(Long id, Integer page, Integer size, String sortBy, String sortDir);
+
     CrudResponse findBookByUserId(Long id, Integer page, Integer size, String sortBy, String sortDir);
+
+    CrudResponse findBookByTitleContaining(String keyword, Integer page, Integer size, String sortBy, String sortDir);
+
 }

@@ -1,5 +1,6 @@
 package com.anonymous63.onlinebookstore.controllers;
 
+import com.anonymous63.onlinebookstore.configs.Constants;
 import com.anonymous63.onlinebookstore.payloads.dtos.BookDto;
 import com.anonymous63.onlinebookstore.payloads.response.ApiResponse;
 import com.anonymous63.onlinebookstore.payloads.response.CrudResponse;
@@ -20,10 +21,10 @@ public class BookController {
 
     // GET /api/books
     @GetMapping("/")
-    public CrudResponse findAllBooks(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
-                                     @RequestParam(value = "size", defaultValue = "100", required = false) int size,
-                                     @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
-                                     @RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir) {
+    public CrudResponse findAllBooks(@RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER, required = false) int page,
+                                     @RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE, required = false) int size,
+                                     @RequestParam(value = "sortBy", defaultValue = Constants.SORT_BY, required = false) String sortBy,
+                                     @RequestParam(value = "sortDir", defaultValue = Constants.SORT_DIR, required = false) String sortDir) {
         return bookService.findAll(page, size, sortBy, sortDir);
     }
 
@@ -51,6 +52,36 @@ public class BookController {
     public ResponseEntity<ApiResponse> deleteBook(@PathVariable Long id) {
         bookService.delete(id);
         return new ResponseEntity<>(new ApiResponse("Book Deleted Successfully", true), HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<CrudResponse> findBookByCategoryId(@PathVariable Long id,
+                                                             @RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER, required = false) int page,
+                                                             @RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE, required = false) int size,
+                                                             @RequestParam(value = "sortBy", defaultValue = Constants.SORT_BY, required = false) String sortBy,
+                                                             @RequestParam(value = "sortDir", defaultValue = Constants.SORT_DIR, required = false) String sortDir) {
+        CrudResponse books = this.bookService.findBookByCategoryId(id, page, size, sortBy, sortDir);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<CrudResponse> findBookByUserId(@PathVariable Long id,
+                                                         @RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER, required = false) int page,
+                                                         @RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE, required = false) int size,
+                                                         @RequestParam(value = "sortBy", defaultValue = Constants.SORT_BY, required = false) String sortBy,
+                                                         @RequestParam(value = "sortDir", defaultValue = Constants.SORT_DIR, required = false) String sortDir) {
+        CrudResponse books = this.bookService.findBookByUserId(id, page, size, sortBy, sortDir);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<CrudResponse> findBookByTitleContaining(@RequestParam String keyword,
+                                                                  @RequestParam(value = "page", defaultValue = Constants.PAGE_NUMBER, required = false) int page,
+                                                                  @RequestParam(value = "size", defaultValue = Constants.PAGE_SIZE, required = false) int size,
+                                                                  @RequestParam(value = "sortBy", defaultValue = Constants.SORT_BY, required = false) String sortBy,
+                                                                  @RequestParam(value = "sortDir", defaultValue = Constants.SORT_DIR, required = false) String sortDir) {
+        CrudResponse books = this.bookService.findBookByTitleContaining(keyword, page, size, sortBy, sortDir);
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
 }
