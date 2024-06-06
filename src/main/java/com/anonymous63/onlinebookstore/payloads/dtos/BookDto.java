@@ -16,7 +16,7 @@ public class BookDto {
     private String author;
     @Size(max = 255, message = "Description must be less than 255 characters")
     private String description;
-    private String imageUrl;
+    private String imageName;
     @NotEmpty(message = "Publisher is required")
     @Size(min = 3, max = 50, message = "Publisher must be between 3 and 50 characters")
     private String publisher;

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "books")
 public class Book {
 
     @Id
@@ -16,7 +17,7 @@ public class Book {
     private String author;
     @Column(length = 255)
     private String description;
-    private String imageUrl;
+    private String imageName;
     @Column(nullable = false, length = 50)
     private String publisher;
     @Column(nullable = false, length = 50)
