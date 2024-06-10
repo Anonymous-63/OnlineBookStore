@@ -1,5 +1,6 @@
 package com.anonymous63.onlinebookstore.controllers;
 
+import com.anonymous63.onlinebookstore.exceptions.ApiException;
 import com.anonymous63.onlinebookstore.payloads.request.JwtAuthRequest;
 import com.anonymous63.onlinebookstore.payloads.response.JwtAuthResponse;
 import com.anonymous63.onlinebookstore.security.JwtTokenHelper;
@@ -44,7 +45,7 @@ public class AuthController {
         try {
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (BadCredentialsException e) {
-            throw new Exception("Invalid username or password");
+            throw new ApiException("Invalid username or password");
         }
     }
 
