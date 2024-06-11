@@ -33,7 +33,7 @@ public class OnlineBookStoreApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        System.out.println(passwordEncoder.encode("123456"));
         try {
             Role roleAdmin = new Role();
             roleAdmin.setId(Constants.ROLE_ADMIN);
@@ -44,11 +44,8 @@ public class OnlineBookStoreApplication implements CommandLineRunner {
             roleUser.setName("ROLE_USER");
 
             List<Role> roles = List.of(roleAdmin, roleUser);
-            List<Role> savedRoles = roleRepo.saveAll(roles);
+            this.roleRepo.saveAll(roles);
             System.out.println("Roles saved successfully");
-            savedRoles.forEach(System.out::println);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

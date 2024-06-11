@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserController(UserService userService) {
@@ -40,6 +44,7 @@ public class UserController {
     // POST /api/users/
     @PostMapping("/")
     public UserDto createUser(@Valid @RequestBody UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         return this.userService.create(userDto);
     }
 
@@ -47,6 +52,7 @@ public class UserController {
     @PutMapping("/{id}")
     public UserDto updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Long id) {
         userDto.setId(id);
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         return this.userService.update(userDto, id);
     }
 
