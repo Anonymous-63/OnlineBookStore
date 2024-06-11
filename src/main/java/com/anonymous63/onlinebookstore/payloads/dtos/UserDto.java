@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 public class UserDto {
 
@@ -23,4 +26,6 @@ public class UserDto {
     @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
     private String password;
     private boolean enabled;
+
+    private Set<RoleDto> roles = new HashSet<>();
 }

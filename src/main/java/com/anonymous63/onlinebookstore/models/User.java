@@ -1,5 +1,6 @@
 package com.anonymous63.onlinebookstore.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,8 +28,8 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 64)
     private String password;
 
-    @Column(nullable = false, columnDefinition = "boolean default true")
-    private boolean enabled;
+    @Column(nullable = false, columnDefinition = "bit default 1")
+    private boolean enabled = true;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();

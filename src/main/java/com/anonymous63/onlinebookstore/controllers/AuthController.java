@@ -1,9 +1,12 @@
 package com.anonymous63.onlinebookstore.controllers;
 
 import com.anonymous63.onlinebookstore.exceptions.ApiException;
+import com.anonymous63.onlinebookstore.payloads.dtos.UserDto;
 import com.anonymous63.onlinebookstore.payloads.request.JwtAuthRequest;
 import com.anonymous63.onlinebookstore.payloads.response.JwtAuthResponse;
 import com.anonymous63.onlinebookstore.security.JwtTokenHelper;
+import com.anonymous63.onlinebookstore.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,9 @@ public class AuthController {
     private UserDetailsService userDetailsService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
@@ -40,8 +46,13 @@ public class AuthController {
         return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
 
-    private void authenticate(String username, String password) throws Exception {
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
+        UserDto newUser = this.userService.register(userDto);
+        return new ResponseEntity<>(newUser, HttpStatus.OK);
+    }
 
+    private void authenticate(String username, String password) {
         try {
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (BadCredentialsException e) {

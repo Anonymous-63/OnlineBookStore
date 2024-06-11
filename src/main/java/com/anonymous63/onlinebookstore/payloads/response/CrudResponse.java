@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrudResponse<Entity> {
-    private List<Entity> content;
+public class CrudResponse<T> {
+    private List<T> content;
     private int totalPages;
     private long totalElements;
     private int noOfElements;

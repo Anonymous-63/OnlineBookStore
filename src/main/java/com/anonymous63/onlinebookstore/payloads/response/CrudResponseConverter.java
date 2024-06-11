@@ -5,8 +5,8 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public class CrudResponseConverter {
-    public static <Entity> CrudResponse<Entity> convertToResponse(List<Entity> content, Page<?> pageDetails) {
-        CrudResponse<Entity> crudResponse = new CrudResponse<>();
+    public static <T> CrudResponse<T> convertToResponse(List<T> content, Page<?> pageDetails) {
+        CrudResponse<T> crudResponse = new CrudResponse<>();
         crudResponse.setContent(content);
         crudResponse.setTotalPages(pageDetails.getTotalPages());
         crudResponse.setTotalElements(pageDetails.getTotalElements());
