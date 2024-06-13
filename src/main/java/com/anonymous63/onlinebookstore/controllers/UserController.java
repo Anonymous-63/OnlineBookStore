@@ -5,6 +5,8 @@ import com.anonymous63.onlinebookstore.payloads.dtos.UserDto;
 import com.anonymous63.onlinebookstore.payloads.response.ApiResponse;
 import com.anonymous63.onlinebookstore.payloads.response.CrudResponse;
 import com.anonymous63.onlinebookstore.services.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
