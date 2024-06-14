@@ -25,6 +25,7 @@ public class UserDto {
     @NotEmpty(message = "Password is required")
     @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
     private String password;
+
     private boolean enabled;
 
     private Set<RoleDto> roles = new HashSet<>();
@@ -33,6 +34,7 @@ public class UserDto {
     public String getPassword() {
         return password;
     }
+
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
