@@ -14,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "User", description = "The User API. Contains all the operations that can be performed on a user.")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
