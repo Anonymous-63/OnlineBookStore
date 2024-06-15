@@ -22,7 +22,7 @@ public class AuditLogServiceImpl implements AuditLogService {
         auditLog.setEntityId(entityId);
         auditLog.setUsername(username);
         auditLog.setUserId(userId);
-        auditLog.setTimestamp(LocalDateTime.now());
+        auditLog.setCreatedAt(LocalDateTime.now());
         auditLog.setDetails(details);
         this.auditRepo.save(auditLog);
     }
